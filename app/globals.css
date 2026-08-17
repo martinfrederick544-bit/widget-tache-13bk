@@ -1,0 +1,228 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #f1f5f9;
+  color: #1f2933;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.frame-guard-blocked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.board {
+  --accent: #2563eb;
+  --accent-soft: #dbeafe;
+  padding: 1rem 1.25rem 2rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.board__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  border-bottom: 3px solid var(--accent);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.board__header h1 {
+  font-size: 1.4rem;
+  margin: 0;
+  color: var(--accent);
+}
+
+.board__date-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.board__date-controls input[type='date'] {
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.9rem;
+}
+
+.board__date-controls button {
+  border: none;
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.board__actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.board__actions button {
+  border: none;
+  background: var(--accent);
+  color: white;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+.board__actions button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.board__empty {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  padding: 1.5rem 0;
+}
+
+.board__error {
+  color: #dc2626;
+  font-size: 0.85rem;
+  background: #fee2e2;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+}
+
+.board__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1rem;
+}
+
+.item-card {
+  background: #fffbe6;
+  border-radius: 10px;
+  padding: 0.75rem;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 140px;
+}
+
+.item-card--tache {
+  background: #fef3e2;
+}
+
+.item-card--rappel {
+  background: #ffe8e8;
+}
+
+.item-card--done {
+  opacity: 0.55;
+}
+
+.item-card--done .item-card__content {
+  text-decoration: line-through;
+}
+
+.item-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item-card__badge {
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+}
+
+.item-card__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.item-card__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: #475569;
+}
+
+.item-card__delete {
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.item-card__delete:hover {
+  color: #dc2626;
+}
+
+.item-card__content {
+  flex: 1;
+  min-height: 60px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  outline: none;
+  word-break: break-word;
+}
+
+.item-card__content:empty::before {
+  content: 'Écris ici...';
+  color: #b6ad8e;
+}
+
+.item-card__toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  border-top: 1px dashed rgba(0, 0, 0, 0.12);
+  padding-top: 0.4rem;
+}
+
+.item-card__toolbar-label {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  margin-right: 0.15rem;
+}
+
+.item-card__swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  padding: 0;
+}
+
+.item-card__swatch--highlight:first-of-type {
+  background-image: linear-gradient(45deg, transparent 45%, #dc2626 45%, #dc2626 55%, transparent 55%);
+}
