@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import type { WidgetItem } from '@/lib/supabaseClient';
 
 const TEXT_COLORS = [
@@ -35,6 +35,16 @@ interface Props {
 
 export default function ItemCard({ item, accent, onContentChange, onToggleComplete, onDelete }: Props) {
   const editableRef = useRef<HTMLDivElement>(null);
+
+  // Set the initial content once when the card mounts, then let the DOM own it.
+  // Re-writing innerHTML from React state on every keystroke resets the cursor
+  // to the start of the element, which made typing appear reversed.
+  useEffect(() => {
+    if (editableRef.current) {
+      editableRef.current.innerHTML = item.content;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item.id]);
 
   const applyFormat = (command: 'foreColor' | 'hiliteColor', value: string) => {
     editableRef.current?.focus();
@@ -82,7 +92,6 @@ export default function ItemCard({ item, accent, onContentChange, onToggleComple
         contentEditable
         suppressContentEditableWarning
         onInput={(e) => onContentChange(item.id, e.currentTarget.innerHTML)}
-        dangerouslySetInnerHTML={{ __html: item.content }}
       />
 
       <div className="item-card__toolbar">
