@@ -109,120 +109,144 @@ body {
   padding: 0.6rem 0.8rem;
 }
 
-.board__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 1rem;
-}
-
-.item-card {
-  background: #fffbe6;
-  border-radius: 10px;
-  padding: 0.75rem;
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
+.board__sections {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  min-height: 140px;
+  gap: 1.5rem;
 }
 
-.item-card--tache {
-  background: #fef3e2;
+.type-section {
+  --type-color: #64748b;
 }
 
-.item-card--rappel {
-  background: #ffe8e8;
+.type-section--note {
+  --type-color: #d97706;
 }
 
-.item-card--done {
-  opacity: 0.55;
+.type-section--tache {
+  --type-color: #2563eb;
 }
 
-.item-card--done .item-card__content {
+.type-section--rappel {
+  --type-color: #e11d48;
+}
+
+.type-section__title {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 2px solid var(--type-color);
+  color: var(--type-color);
+}
+
+.type-section__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.item-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  background: white;
+  border-left: 4px solid var(--type-color);
+  border-radius: 6px;
+  padding: 0.5rem 0.6rem;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+.item-row--done {
+  opacity: 0.5;
+}
+
+.item-row--done .item-row__content {
   text-decoration: line-through;
 }
 
-.item-card__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.item-card__badge {
-  color: white;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  padding: 0.2rem 0.55rem;
-  border-radius: 999px;
-}
-
-.item-card__header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.item-card__checkbox {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.75rem;
-  color: #475569;
-}
-
-.item-card__delete {
-  border: none;
-  background: transparent;
-  color: #94a3b8;
+.item-row__checkbox {
+  margin-top: 0.3rem;
+  width: 15px;
+  height: 15px;
+  accent-color: var(--type-color);
   cursor: pointer;
-  font-size: 0.9rem;
-  line-height: 1;
+  flex-shrink: 0;
 }
 
-.item-card__delete:hover {
-  color: #dc2626;
-}
-
-.item-card__content {
+.item-row__content {
   flex: 1;
-  min-height: 60px;
-  font-size: 0.9rem;
-  line-height: 1.4;
+  min-height: 1.3em;
   outline: none;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  padding-top: 1px;
   word-break: break-word;
 }
 
-.item-card__content:empty::before {
+.item-row__content:empty::before {
   content: 'Écris ici...';
-  color: #b6ad8e;
+  color: #b6bcc7;
 }
 
-.item-card__toolbar {
+.item-row__toolbar {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-  border-top: 1px dashed rgba(0, 0, 0, 0.12);
-  padding-top: 0.4rem;
+  gap: 0.25rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+  flex-shrink: 0;
+  padding-top: 0.2rem;
 }
 
-.item-card__toolbar-label {
-  font-size: 0.65rem;
-  color: #94a3b8;
-  margin-right: 0.15rem;
+.item-row:hover .item-row__toolbar,
+.item-row:focus-within .item-row__toolbar {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.item-card__swatch {
-  width: 16px;
-  height: 16px;
+.item-row__toolbar-sep {
+  width: 1px;
+  height: 14px;
+  background: #e2e8f0;
+  margin: 0 0.15rem;
+}
+
+.item-row__swatch {
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   border: 1px solid rgba(0, 0, 0, 0.15);
   cursor: pointer;
   padding: 0;
+  flex-shrink: 0;
 }
 
-.item-card__swatch--highlight:first-of-type {
+.item-row__swatch--highlight:first-of-type {
   background-image: linear-gradient(45deg, transparent 45%, #dc2626 45%, #dc2626 55%, transparent 55%);
+}
+
+.item-row__delete {
+  border: none;
+  background: transparent;
+  color: #cbd2dc;
+  cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  padding-top: 0.15rem;
+}
+
+.item-row:hover .item-row__delete,
+.item-row:focus-within .item-row__delete {
+  opacity: 1;
+}
+
+.item-row__delete:hover {
+  color: #dc2626;
 }

@@ -2,7 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { supabase, type ItemType, type Person, type WidgetItem } from '@/lib/supabaseClient';
-import ItemCard from './ItemCard';
+import ItemRow from './ItemCard';
+
+const SECTIONS: { type: ItemType; label: string; addLabel: string }[] = [
+  { type: 'note', label: 'Notes', addLabel: '+ Note' },
+  { type: 'tache', label: 'Tâches', addLabel: '+ Tâche' },
+  { type: 'rappel', label: 'Rappels', addLabel: '+ Rappel' },
+];
 
 function todayIso(): string {
   const now = new Date();
@@ -98,15 +104,11 @@ export default function Board({ person, displayName, accent, accentSoft }: Props
       </header>
 
       <div className="board__actions">
-        <button type="button" onClick={() => addItem('note')}>
-          + Note
-        </button>
-        <button type="button" onClick={() => addItem('tache')}>
-          + Tâche
-        </button>
-        <button type="button" onClick={() => addItem('rappel')}>
-          + Rappel
-        </button>
+        {SECTIONS.map((section) => (
+          <button key={section.type} type="button" onClick={() => addItem(section.type)}>
+            {section.addLabel}
+          </button>
+        ))}
       </div>
 
       {error && <p className="board__error">{error}</p>}
@@ -116,17 +118,27 @@ export default function Board({ person, displayName, accent, accentSoft }: Props
       ) : items.length === 0 ? (
         <p className="board__empty">Rien pour cette journée. Ajoute une note, une tâche ou un rappel.</p>
       ) : (
-        <div className="board__grid">
-          {items.map((item) => (
-            <ItemCard
-              key={item.id}
-              item={item}
-              accent={accent}
-              onContentChange={handleContentChange}
-              onToggleComplete={handleToggleComplete}
-              onDelete={handleDelete}
-            />
-          ))}
+        <div className="board__sections">
+          {SECTIONS.map((section) => {
+            const sectionItems = items.filter((it) => it.type === section.type);
+            if (sectionItems.length === 0) return null;
+            return (
+              <div key={section.type} className={`type-section type-section--${section.type}`}>
+                <h2 className="type-section__title">{section.label}</h2>
+                <div className="type-section__list">
+                  {sectionItems.map((item) => (
+                    <ItemRow
+                      key={item.id}
+                      item={item}
+                      onContentChange={handleContentChange}
+                      onToggleComplete={handleToggleComplete}
+                      onDelete={handleDelete}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

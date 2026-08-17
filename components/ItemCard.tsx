@@ -19,24 +19,17 @@ const HIGHLIGHT_COLORS = [
   { label: 'Bleu', value: '#bfdbfe' },
 ];
 
-const TYPE_LABELS: Record<WidgetItem['type'], string> = {
-  note: 'Note',
-  tache: 'Tâche',
-  rappel: 'Rappel',
-};
-
 interface Props {
   item: WidgetItem;
-  accent: string;
   onContentChange: (id: string, html: string) => void;
   onToggleComplete: (id: string, completed: boolean) => void;
   onDelete: (id: string) => void;
 }
 
-export default function ItemCard({ item, accent, onContentChange, onToggleComplete, onDelete }: Props) {
+export default function ItemRow({ item, onContentChange, onToggleComplete, onDelete }: Props) {
   const editableRef = useRef<HTMLDivElement>(null);
 
-  // Set the initial content once when the card mounts, then let the DOM own it.
+  // Set the initial content once when the row mounts, then let the DOM own it.
   // Re-writing innerHTML from React state on every keystroke resets the cursor
   // to the start of the element, which made typing appear reversed.
   useEffect(() => {
@@ -59,67 +52,59 @@ export default function ItemCard({ item, accent, onContentChange, onToggleComple
   };
 
   return (
-    <div className={`item-card item-card--${item.type} ${item.completed ? 'item-card--done' : ''}`}>
-      <div className="item-card__header">
-        <span className="item-card__badge" style={{ backgroundColor: accent }}>
-          {TYPE_LABELS[item.type]}
-        </span>
-        <div className="item-card__header-actions">
-          {item.type !== 'note' && (
-            <label className="item-card__checkbox">
-              <input
-                type="checkbox"
-                checked={item.completed}
-                onChange={(e) => onToggleComplete(item.id, e.target.checked)}
-              />
-              Fait
-            </label>
-          )}
-          <button
-            type="button"
-            className="item-card__delete"
-            aria-label="Supprimer"
-            onClick={() => onDelete(item.id)}
-          >
-            ✕
-          </button>
-        </div>
-      </div>
+    <div className={`item-row item-row--${item.type} ${item.completed ? 'item-row--done' : ''}`}>
+      {item.type !== 'note' && (
+        <input
+          type="checkbox"
+          className="item-row__checkbox"
+          checked={item.completed}
+          onChange={(e) => onToggleComplete(item.id, e.target.checked)}
+          aria-label="Marquer comme fait"
+        />
+      )}
 
       <div
         ref={editableRef}
-        className="item-card__content"
+        className="item-row__content"
         contentEditable
         suppressContentEditableWarning
         onInput={(e) => onContentChange(item.id, e.currentTarget.innerHTML)}
       />
 
-      <div className="item-card__toolbar">
-        <span className="item-card__toolbar-label">Texte</span>
+      <div className="item-row__toolbar">
         {TEXT_COLORS.map((c) => (
           <button
             key={c.value}
             type="button"
-            title={c.label}
-            className="item-card__swatch"
+            title={`Texte ${c.label}`}
+            className="item-row__swatch"
             style={{ backgroundColor: c.value }}
             onMouseDown={preventBlur}
             onClick={() => applyFormat('foreColor', c.value)}
           />
         ))}
-        <span className="item-card__toolbar-label">Surlignage</span>
+        <span className="item-row__toolbar-sep" />
         {HIGHLIGHT_COLORS.map((c) => (
           <button
             key={c.value}
             type="button"
-            title={c.label}
-            className="item-card__swatch item-card__swatch--highlight"
+            title={`Surlignage ${c.label}`}
+            className="item-row__swatch item-row__swatch--highlight"
             style={{ backgroundColor: c.value }}
             onMouseDown={preventBlur}
             onClick={() => applyFormat('hiliteColor', c.value)}
           />
         ))}
       </div>
+
+      <button
+        type="button"
+        className="item-row__delete"
+        aria-label="Supprimer"
+        onClick={() => onDelete(item.id)}
+      >
+        ✕
+      </button>
     </div>
   );
 }
