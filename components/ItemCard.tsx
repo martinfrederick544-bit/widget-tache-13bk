@@ -17,6 +17,8 @@ const HIGHLIGHT_COLORS = [
   { label: 'Rose', value: '#fbcfe8' },
   { label: 'Vert', value: '#bbf7d0' },
   { label: 'Bleu', value: '#bfdbfe' },
+  { label: 'Rouge', value: '#fca5a5' },
+  { label: 'Orange', value: '#fed7aa' },
 ];
 
 interface Props {
