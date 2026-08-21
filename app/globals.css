@@ -78,6 +78,118 @@ body {
   flex-wrap: wrap;
 }
 
+.carry-panel {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.carry-panel__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #475569;
+  margin-bottom: 0.6rem;
+}
+
+.carry-panel__header input[type='date'] {
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.85rem;
+}
+
+.carry-panel__close {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.carry-panel__close:hover {
+  color: #1f2933;
+}
+
+.carry-panel__list {
+  list-style: none;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.carry-panel__item label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  border-radius: 6px;
+  padding: 0.4rem 0.55rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.carry-panel__type {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.carry-panel__type--note {
+  background: #d97706;
+}
+
+.carry-panel__type--tache {
+  background: #2563eb;
+}
+
+.carry-panel__type--rappel {
+  background: #e11d48;
+}
+
+.carry-panel__preview {
+  flex: 1;
+  color: #334155;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.carry-panel__done-tag {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.carry-panel__footer button {
+  border: none;
+  background: var(--accent);
+  color: white;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.carry-panel__footer button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .board__actions button {
   border: none;
   background: var(--accent);

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { supabase, type ItemType, type Person, type WidgetItem } from '@/lib/supabaseClient';
 import ItemRow from './ItemCard';
+import CarryOverPanel from './CarryOverPanel';
 
 const SECTIONS: { type: ItemType; label: string; addLabel: string }[] = [
   { type: 'note', label: 'Notes', addLabel: '+ Note' },
@@ -29,6 +30,7 @@ export default function Board({ person, displayName, accent, accentSoft }: Props
   const [items, setItems] = useState<WidgetItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [carryOpen, setCarryOpen] = useState(false);
   const saveTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
 
   const loadItems = useCallback(async () => {
@@ -100,8 +102,20 @@ export default function Board({ person, displayName, accent, accentSoft }: Props
           <button type="button" onClick={() => setSelectedDate(todayIso())}>
             Aujourd&apos;hui
           </button>
+          <button type="button" onClick={() => setCarryOpen((v) => !v)}>
+            ↩ Reporter des éléments
+          </button>
         </div>
       </header>
+
+      {carryOpen && (
+        <CarryOverPanel
+          person={person}
+          targetDate={selectedDate}
+          onClose={() => setCarryOpen(false)}
+          onCopy={(newItems) => setItems((prev) => [...prev, ...newItems])}
+        />
+      )}
 
       <div className="board__actions">
         {SECTIONS.map((section) => (
